@@ -1,9 +1,4 @@
 import os
-
-if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 10000))
-    app.run(host="0.0.0.0", port=port)
-
 import numpy as np
 import gdown
 from flask import Flask, request, render_template
@@ -20,4 +15,22 @@ if not os.path.exists(MODEL_PATH):
     print("Model downloaded.")
 
 model = joblib.load(MODEL_PATH)
+
+@app.route("/", methods=["GET", "POST"])
+def predict():
+    features = ["carbohydrates", "cholesterol", "energy", "fat", "fiber",
+                "proteins", "salt", "saturated_fat", "sodium", "sugars"]
+    prediction = None
+
+    if request.method == "POST":
+        input_data = [float(request.form[feat]) for feat in features]
+        prediction = model.predict(np.array(input_data).reshape(1, -1))[0]
+
+    return render_template("index.html", features=features, prediction=prediction)
+
+# ✅ Flask must be run **at the bottom**
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 10000))
+    app.run(host="0.0.0.0", port=port)
+
 
