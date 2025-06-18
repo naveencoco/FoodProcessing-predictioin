@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Degree of Food Processing Predictor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="title">
+        <h1>Degree of Food Processing Predictor</h1>
+    </div>
+
+    <form method="POST">
+        <div class="main-layout">
+            <!-- Inputs Column -->
+            <div class="input-section">
+                {% for feature in features %}
+                    <div class="input-block">
+                        <label>{{ feature.replace('_', ' ').capitalize() }}</label>
+                        <input name="{{ feature }}" type="number" step="any" required>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <!-- Predict Button Column -->
+            <div class="button-section">
+    <div class="button-wrapper">
+        <img src="{{ url_for('static', filename='topimage.jpg') }}" class="predict-img" alt="Top Image">
+        <input type="submit" value="Predict" class="predict-btn">
+        <img src="{{ url_for('static', filename='bottom.jpg') }}" class="predict-img" alt="Bottom Image">
+    </div>
+</div>
+
+
+            <!-- Output Column -->
+            <div class="output-section">
+                <h3>Prediction Result</h3>
+                {% if prediction is not none %}
+                    <p class="result-text">
+                        The NOVA group of the food is: <span>{{ prediction }}</span><br><br>
+                        <p class="final-quote">
+    “If your food is wrong, medicine is of no use.<br>
+    If your food is right, medicine is no need.”
+</p>
+
+                    </p>
+                {% else %}
+                    <p class="result-text muted">Prediction will appear here.</p>
+                {% endif %}
+            </div>
+        </div>
+    </form>
+</body>
+</html>
