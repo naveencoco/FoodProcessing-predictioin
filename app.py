@@ -1,9 +1,22 @@
-from flask import Flask, request, render_template
-import joblib
+import os
+import requests
 import numpy as np
+from flask import Flask, request, render_template  # ✅ move this up
+import joblib
 
 app = Flask(__name__)
-model = joblib.load("random_forest_model.pkl")
+
+MODEL_URL = "https://drive.google.com/uc?id=1Ch_GV4I9HBKd67ujoznlExJfGRo0nYd7"
+MODEL_PATH = "random_forest_model.pkl"
+
+if not os.path.exists(MODEL_PATH):
+    print("Downloading model from Google Drive...")
+    r = requests.get(MODEL_URL)
+    with open(MODEL_PATH, 'wb') as f:
+        f.write(r.content)
+    print("Model downloaded.")
+
+model = joblib.load(MODEL_PATH)
 
 @app.route("/", methods=["GET", "POST"])
 def predict():
