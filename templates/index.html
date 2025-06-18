@@ -25,31 +25,43 @@
 
             <!-- Predict Button Column -->
             <div class="button-section">
-    <div class="button-wrapper">
-        <img src="{{ url_for('static', filename='topimage.jpg') }}" class="predict-img" alt="Top Image">
-        <input type="submit" value="Predict" class="predict-btn">
-        <img src="{{ url_for('static', filename='bottom.jpg') }}" class="predict-img" alt="Bottom Image">
-    </div>
-</div>
-
+                <div class="button-wrapper">
+                    <img src="{{ url_for('static', filename='topimage.jpg') }}" class="predict-img" alt="Top Image">
+                    <input type="submit" value="Predict" class="predict-btn">
+                    <img src="{{ url_for('static', filename='bottom.jpg') }}" class="predict-img" alt="Bottom Image">
+                </div>
+            </div>
 
             <!-- Output Column -->
             <div class="output-section">
                 <h3>Prediction Result</h3>
                 {% if prediction is not none %}
                     <p class="result-text">
-                        The NOVA group of the food is: <span>{{ prediction }}</span><br><br>
-                        <p class="final-quote">
-    “If your food is wrong, medicine is of no use.<br>
-    If your food is right, medicine is no need.”
-</p>
-
+                        The NOVA group of the food is: <span>{{ prediction }}</span>
                     </p>
+
+                    <!-- Dynamic Quote Based on Prediction -->
+                    <div class="quote-box">
+                        {% if prediction == 0 %}
+                            <p class="quote">"Food is not just fuel. It’s information. It talks to your DNA and tells it what to do."<br><span class="author">— Dr. Mark Hyman</span></p>
+                        {% elif prediction == 1 %}
+                            <p class="quote">"Your diet is a bank account. Good food choices are good investments."<br><span class="author">— Bethenny Frankel</span></p>
+                        {% elif prediction == 2 %}
+                            <p class="quote">"Processed foods not only extend the shelf life, but they extend the waistline."<br><span class="author">— Karen Sessions</span></p>
+                        {% elif prediction == 3 %}
+                            <p class="quote">"When diet is wrong, medicine is of no use. When diet is correct, medicine is of no need."<br><span class="author">— Ayurvedic Proverb</span></p>
+                        {% endif %}
+                    </div>
                 {% else %}
                     <p class="result-text muted">Prediction will appear here.</p>
                 {% endif %}
             </div>
         </div>
     </form>
+
+    <!-- Always Visible Quote at the Bottom -->
+    <div class="fixed-quote">
+        <p>"There is nothing in the world that good food cannot fix."</p>
+    </div>
 </body>
 </html>
