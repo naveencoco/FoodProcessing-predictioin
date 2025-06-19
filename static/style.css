@@ -240,3 +240,21 @@ input[type="number"] {
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
+.input-info-wrapper {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.info-text-box {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+    font-size: 15px;
+    line-height: 1.5;
+    max-width: 300px;
+    min-width: 250px;
+    margin-top: 20px;
+    align-self: flex-start;
+}

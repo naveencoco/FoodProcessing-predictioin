@@ -14,36 +14,30 @@
     <form method="POST">
         <div class="main-layout">
             <!-- Inputs Column -->
-            <div class="input-section">
-    <!-- ✅ User guidance text added here -->
-    <div class="info-text">
+          <!-- New Flex Layout: inputs + instruction side by side -->
+<div class="input-info-wrapper">
+    <div class="input-section">
+        {% for feature in features %}
+            <div class="input-block">
+                <label>{{ feature.replace('_', ' ').replace('(g)', '(g)').replace('(mg)', '(mg)').capitalize() }}</label>
+                <input name="{{ feature }}" type="number" step="any" required>
+            </div>
+        {% endfor %}
+    </div>
+
+    <!-- Instruction block beside inputs -->
+    <div class="info-text-box">
         <p>
-            Enter the nutritional values of the food item you want to analyze. <br>
-            If any value is unknown or not applicable, please enter <strong>0</strong>. <br>
+            Enter the nutritional values of the food item you want to analyze. <br><br>
+            If any value is unknown or not applicable, please enter <strong>0</strong>. <br><br>
             All inputs should be in standard units (e.g., grams or kcal).
         </p>
     </div>
-
-    {% for feature in features %}
-        <div class="input-block">
-            <label>{{ feature.replace('_', ' ').replace('(g)', '(g)').replace('(mg)', '(mg)').capitalize() }}</label>
-            <input name="{{ feature }}" type="number" step="any" required>
-        </div>
-    {% endfor %}
 </div>
-
-
             <!-- Predict Button Column -->
             <!-- Predict Button Column -->
 <div class="button-section">
-    <!-- ✨ Info text added here -->
-    <div class="info-text">
-        <p>
-            Enter the nutritional values of the food item you want to analyze. <br>
-            If any value is unknown or not applicable, please enter <strong>0</strong>. <br>
-            All inputs should be in standard units (e.g., grams or kcal).
-        </p>
-    </div>
+   
 
 
 
