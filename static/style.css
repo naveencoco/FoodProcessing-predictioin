@@ -230,3 +230,13 @@ input[type="number"] {
     max-width: 800px;
     font-family: 'Georgia', serif;
 }
+.info-text {
+    padding: 10px;
+    margin-bottom: 10px;
+    font-size: 0.95rem;
+    text-align: center;
+    color: #333;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
