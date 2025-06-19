@@ -17,7 +17,7 @@
             <div class="input-section">
                 {% for feature in features %}
                     <div class="input-block">
-                        <label>{{ feature.replace('_', ' ').capitalize() }}</label>
+                        <label>{{ feature.replace('_', ' ').replace('(g)', '(g)').replace('(mg)', '(mg)').capitalize() }}</label>
                         <input name="{{ feature }}" type="number" step="any" required>
                     </div>
                 {% endfor %}
@@ -42,13 +42,13 @@
 
                     <!-- Dynamic Quote Based on Prediction -->
                     <div class="quote-box">
-                        {% if prediction == 0 %}
+                        {% if prediction == 1 %} 
                             <p class="quote">"Food is not just fuel. It’s information. It talks to your DNA and tells it what to do."<br><span class="author">— Dr. Mark Hyman</span></p>
-                        {% elif prediction == 1 %}
+                        {% elif prediction == 2 %} 
                             <p class="quote">"Your diet is a bank account. Good food choices are good investments."<br><span class="author">— Bethenny Frankel</span></p>
-                        {% elif prediction == 2 %}
+                        {% elif prediction == 3 %} 
                             <p class="quote">"Processed foods not only extend the shelf life, but they extend the waistline."<br><span class="author">— Karen Sessions</span></p>
-                        {% elif prediction == 3 %}
+                        {% elif prediction == 4 %} 
                             <p class="quote">"When diet is wrong, medicine is of no use. When diet is correct, medicine is of no need."<br><span class="author">— Ayurvedic Proverb</span></p>
                         {% endif %}
                     </div>
