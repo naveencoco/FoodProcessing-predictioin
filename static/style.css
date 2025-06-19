@@ -231,15 +231,15 @@ input[type="number"] {
     font-family: 'Georgia', serif;
 }
 .info-text {
+    background-color: #f0f0f0;  /* Light gray background */
+    color: #333333;             /* Dark text */
     padding: 10px;
+    border-radius: 8px;
     margin-bottom: 10px;
-    font-size: 0.95rem;
-    text-align: center;
-    color: #333;
-    background-color: #f9f9f9;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    font-size: 14px;
+    line-height: 1.6;
 }
+
 .input-info-wrapper {
     display: flex;
     justify-content: space-between;
