@@ -13,39 +13,52 @@
 
     <form method="POST">
         <div class="main-layout">
-            <!-- Inputs Column -->
-          <!-- New Flex Layout: inputs + instruction side by side -->
-<div class="input-info-wrapper">
-    <div class="input-section">
-        {% for feature in features %}
-            <div class="input-block">
-                <label>{{ feature.replace('_', ' ').replace('(g)', '(g)').replace('(mg)', '(mg)').capitalize() }}</label>
-                <input name="{{ feature }}" type="number" step="any" required>
+
+            <!-- Input Column -->
+            <div class="input-section">
+                {% for feature in features %}
+                    <div class="input-block">
+                       <label>{{ labels[feature] }}</label>
+                        <input name="{{ feature }}" type="number" step="any" required>
+                    </div>
+                {% endfor %}
             </div>
-        {% endfor %}
-    </div>
 
-    <!-- Instruction block beside inputs -->
-    <div class="info-text-box">
-        <p>
-            Enter the nutritional values of the food item you want to analyze. <br><br>
-            If any value is unknown or not applicable, please enter <strong>0</strong>. <br><br>
-            All inputs should be in standard units (e.g., grams or kcal).
-        </p>
-    </div>
-</div>
-            <!-- Predict Button Column -->
-            <!-- Predict Button Column -->
-<div class="button-section">
-   
-
-
-
-
+            <!-- Center Column: Predict + Info -->
+            <div class="button-section">
                 <div class="button-wrapper">
+
+                    <!-- 🔼 Instruction ABOVE Predict -->
+                    <div class="info-text-box enhanced-instruction full-box">
+                        <p>
+                            <strong>Enter the nutritional values per 100g of the food item you want to analyze. 
+                            If any value is unknown or not applicable, please enter 0. 
+                            All inputs should be in standard units (e.g. g, or mg, or kcal).</strong>
+                        </p>
+                    </div>
+
+                    <!-- Predict Button and Images -->
                     <img src="{{ url_for('static', filename='topimage.jpg') }}" class="predict-img" alt="Top Image">
                     <input type="submit" value="Predict" class="predict-btn">
                     <img src="{{ url_for('static', filename='bottom.jpg') }}" class="predict-img" alt="Bottom Image">
+
+                    <!-- 🔽 Recommendation BELOW Predict -->
+                    {% if prediction is not none %}
+                       <div class="recommendation-box full-box">
+    <p><strong>Recommendation:</strong></p>
+    {% if prediction == 1 %}
+        <p>Eat these foods every day. They are fresh and very good for your health.</p>
+    {% elif prediction == 2 %}
+        <p>Use these to prepare meals. They are okay when used in small amounts.</p>
+    {% elif prediction == 3 %}
+        <p>Eat sometimes. These are processed foods — don’t have too much.</p>
+    {% elif prediction == 4 %}
+        <p>Avoid often. These are highly processed and not good if eaten too much.</p>
+    {% endif %}
+</div>
+
+                    {% endif %}
+
                 </div>
             </div>
 
@@ -57,15 +70,14 @@
                         The NOVA group of the food is: <span>{{ prediction }}</span>
                     </p>
 
-                    <!-- Dynamic Quote Based on Prediction -->
                     <div class="quote-box">
-                        {% if prediction == 1 %} 
+                        {% if prediction == 1 %}
                             <p class="quote">"Food is not just fuel. It’s information. It talks to your DNA and tells it what to do."<br><span class="author">— Dr. Mark Hyman</span></p>
-                        {% elif prediction == 2 %} 
+                        {% elif prediction == 2 %}
                             <p class="quote">"Your diet is a bank account. Good food choices are good investments."<br><span class="author">— Bethenny Frankel</span></p>
-                        {% elif prediction == 3 %} 
+                        {% elif prediction == 3 %}
                             <p class="quote">"Processed foods not only extend the shelf life, but they extend the waistline."<br><span class="author">— Karen Sessions</span></p>
-                        {% elif prediction == 4 %} 
+                        {% elif prediction == 4 %}
                             <p class="quote">"When diet is wrong, medicine is of no use. When diet is correct, medicine is of no need."<br><span class="author">— Ayurvedic Proverb</span></p>
                         {% endif %}
                     </div>
@@ -76,7 +88,6 @@
         </div>
     </form>
 
-    <!-- Always Visible Quote at the Bottom -->
     <div class="fixed-quote">
         <p>"There is nothing in the world that good food cannot fix."</p>
     </div>

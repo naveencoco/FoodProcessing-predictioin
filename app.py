@@ -1,50 +1,45 @@
-import os
-import numpy as np
-import gdown
-from flask import Flask, request, render_template
+from flask import Flask, render_template, request
 import joblib
+import numpy as np
 
-app = Flask(__name__)
-
-MODEL_ID = "1Ch_GV4I9HBKd67ujoznlExJfGRo0nYd7"
-MODEL_PATH = "random_forest_model.pkl"
-
-# Download model if not present
-if not os.path.exists(MODEL_PATH):
-    print("Downloading model using gdown...")
-    gdown.download(id=MODEL_ID, output=MODEL_PATH, quiet=False)
-    print("Model downloaded.")
+# Create the Flask app and explicitly set static/template folders
+app = Flask(__name__, static_folder='static', template_folder='templates')
 
 # Load the trained model
-model = joblib.load(MODEL_PATH)
+model = joblib.load("random_forest_model.pkl")
 
-# 🆕 Updated feature names
-features = [
-    "carbohydrates_(g)",
-    "cholesterol_(mg)",
-    "energy_(kcal)",
-    "fat_(g)",
-    "fiber_(g)",
-    "minerals_(mg)",
-    "proteins_(g)",
-    "salt/sodium_(mg)",
-    "saturated-fat_(g)",
-    "vitamins_(mg)"
-]
+# Nutritional features used in the model
+features = ['carbohydrates', 'cholesterol', 'energy', 'fat', 'fiber', 'minerals',
+            'proteins', 'salt_sodium', 'saturated_fat', 'vitamins']
+
+feature_labels = {
+    'carbohydrates': 'Carbohydrates (g)',
+    'cholesterol': 'Cholesterol (mg)',
+    'energy': 'Energy (kcal)',
+    'fat': 'Fat (g)',
+    'fiber': 'Fiber (g)',
+    'minerals': 'Minerals (g)',
+    'proteins': 'Proteins (g)',
+    'salt_sodium': 'Salt/Sodium (mg)',
+    'saturated_fat': 'Saturated Fat (g)',
+    'vitamins': 'Vitamins (mg)'
+}
+
 
 @app.route("/", methods=["GET", "POST"])
-def predict():
+def home():
     prediction = None
 
     if request.method == "POST":
-        input_data = [float(request.form[feat]) for feat in features]
-        prediction = model.predict(np.array(input_data).reshape(1, -1))[0]
+        try:
+            input_data = [float(request.form[feature]) for feature in features]
+            prediction = model.predict([input_data])[0]
+        except Exception as e:
+            prediction = f"Error: {e}"
 
-    return render_template("index.html", features=features, prediction=prediction)
+        return render_template("index.html", features=features, prediction=prediction, labels=feature_labels)
+
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 10000))
-    app.run(host="0.0.0.0", port=port)
-
-
-
+    # Run on port 10000
+    app.run(debug=True, port=10000)
