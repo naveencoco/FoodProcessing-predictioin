@@ -37,7 +37,8 @@ def home():
         except Exception as e:
             prediction = f"Error: {e}"
 
-        return render_template("index.html", features=features, prediction=prediction, labels=feature_labels)
+    return render_template("index.html", features=features, prediction=prediction, labels=feature_labels)
+
 
 
 if __name__ == "__main__":

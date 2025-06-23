@@ -44,20 +44,26 @@
 
                     <!-- 🔽 Recommendation BELOW Predict -->
                     {% if prediction is not none %}
-                       <div class="recommendation-box full-box">
-    <p><strong>Recommendation:</strong></p>
-    {% if prediction == 1 %}
-        <p>Eat these foods every day. They are fresh and very good for your health.</p>
-    {% elif prediction == 2 %}
-        <p>Use these to prepare meals. They are okay when used in small amounts.</p>
-    {% elif prediction == 3 %}
-        <p>Eat sometimes. These are processed foods — don’t have too much.</p>
-    {% elif prediction == 4 %}
-        <p>Avoid often. These are highly processed and not good if eaten too much.</p>
-    {% endif %}
-</div>
+    <div class="recommendation-box full-box">
+        <p><strong>Recommendation:</strong></p>
+        {% if prediction == 1 %}
+            <p>Eat these foods every day. They are fresh and very good for your health.</p>
+        {% elif prediction == 2 %}
+            <p>Use these to prepare meals. They are okay when used in small amounts.</p>
+        {% elif prediction == 3 %}
+            <p>Eat sometimes. These are processed foods — don’t have too much.</p>
+        {% elif prediction == 4 %}
+            <p>Avoid often. These are highly processed and not good if eaten too much.</p>
+        {% else %}
+            <p>Invalid prediction value.</p>
+        {% endif %}
+    </div>
+{% endif %}
 
-                    {% endif %}
+                    {% if prediction %}
+  <p>Prediction: {{ prediction }}</p>
+{% endif %}
+
 
                 </div>
             </div>
